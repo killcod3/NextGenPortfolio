@@ -114,7 +114,10 @@ export function Navbar() {
       {/* Mobile Navigation Menu */}
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-50 bg-background/80 backdrop-blur-md flex flex-col pt-20 pb-6 px-4 md:hidden"
+          className="fixed inset-0 z-50 backdrop-blur-md flex flex-col pt-20 pb-6 px-4 md:hidden"
+          style={{
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+          }}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
