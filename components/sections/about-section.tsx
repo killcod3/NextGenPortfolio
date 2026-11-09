@@ -4,7 +4,8 @@ import { SectionContainer } from "@/components/section-container";
 import { SectionHeading } from "@/components/section-heading";
 import { getSkills } from "@/lib/config";
 import { Progress } from "@/components/ui/progress";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 export function AboutSection() {
   const skills = getSkills();
@@ -49,8 +50,8 @@ export function AboutSection() {
           >
             <h3 className="text-xl font-semibold mb-4">Frontend Skills</h3>
             <div className="space-y-4">
-              {frontendSkills.map((skill, index) => (
-                <SkillBar key={skill.name} skill={skill} index={index} />
+              {frontendSkills.map((skill) => (
+                <SkillBar key={skill.name} skill={skill} />
               ))}
             </div>
           </motion.div>
@@ -63,8 +64,8 @@ export function AboutSection() {
           >
             <h3 className="text-xl font-semibold mb-4">Backend Skills</h3>
             <div className="space-y-4">
-              {backendSkills.map((skill, index) => (
-                <SkillBar key={skill.name} skill={skill} index={index} />
+              {backendSkills.map((skill) => (
+                <SkillBar key={skill.name} skill={skill} />
               ))}
             </div>
           </motion.div>
@@ -78,8 +79,8 @@ export function AboutSection() {
             >
               <h3 className="text-xl font-semibold mb-4">Other Skills</h3>
               <div className="space-y-4">
-                {otherSkills.map((skill, index) => (
-                  <SkillBar key={skill.name} skill={skill} index={index} />
+                {otherSkills.map((skill) => (
+                  <SkillBar key={skill.name} skill={skill} />
                 ))}
               </div>
             </motion.div>
@@ -95,24 +96,27 @@ interface SkillBarProps {
     name: string;
     level: number;
   };
-  index: number;
 }
 
-function SkillBar({ skill, index }: SkillBarProps) {
+function SkillBar({ skill }: SkillBarProps) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(trackRef, { once: true, margin: "0px 0px -100px 0px" });
+
   return (
     <div className="space-y-2">
       <div className="flex justify-between">
         <span className="font-medium">{skill.name}</span>
         <span className="text-muted-foreground">{skill.level}%</span>
       </div>
-      <motion.div
-        initial={{ width: 0 }}
-        whileInView={{ width: `${skill.level}%` }}
-        transition={{ duration: 1, delay: 0.1 * index }}
-        viewport={{ once: true, margin: "-100px" }}
-      >
-        <Progress value={skill.level} className="h-2" />
-      </motion.div>
+      <div ref={trackRef} className="w-full">
+        <Progress
+          value={isInView ? skill.level : 0}
+          aria-label={skill.name}
+          aria-valuenow={skill.level}
+          aria-valuetext={`${skill.level}%`}
+          className="h-2"
+        />
+      </div>
     </div>
   );
 }

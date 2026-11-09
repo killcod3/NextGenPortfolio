@@ -84,6 +84,7 @@ function ExperienceItem({ experience, index, total }: ExperienceItemProps) {
       )}
       
       <motion.div
+        className="relative"
         initial={{ opacity: 0, x: -20 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -91,7 +92,7 @@ function ExperienceItem({ experience, index, total }: ExperienceItemProps) {
       >
         <Card className="ml-12 transition-all hover:shadow-md">
           <CardHeader>
-            <div className="absolute -left-6 top-6 h-12 w-12 rounded-full bg-primary flex items-center justify-center">
+            <div className="absolute left-0 top-6 h-12 w-12 rounded-full bg-primary flex items-center justify-center">
               {experience.type === 'work' ? (
                 <BriefcaseIcon className="h-6 w-6 text-primary-foreground" />
               ) : (

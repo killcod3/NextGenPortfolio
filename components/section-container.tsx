@@ -11,7 +11,7 @@ export function SectionContainer({ id, children, className }: SectionContainerPr
   return (
     <motion.section
       id={id}
-      className={cn("py-16 md:py-24", className)}
+      className={cn("overflow-x-clip py-16 md:py-24", className)}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
